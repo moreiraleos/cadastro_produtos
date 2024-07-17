@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categoria;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
 class ControladorProduto extends Controller
@@ -12,7 +14,8 @@ class ControladorProduto extends Controller
      */
     public function index()
     {
-        return view("produtos");
+        $produtos = Produto::all();
+        return view("produtos", compact('produtos'));
     }
 
     /**
@@ -20,7 +23,8 @@ class ControladorProduto extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        return view('novoProduto', compact('categorias'));
     }
 
     /**
@@ -28,7 +32,13 @@ class ControladorProduto extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $produto = new Produto();
+        $produto->name = $request->nomeProduto;
+        $produto->estoque = $request->qtdEstoque;
+        $produto->preco = $request->preco;
+        $produto->categoria_id = $request->categoria;
+        $produto->save();
+        return redirect('/produtos');
     }
 
     /**
@@ -44,7 +54,13 @@ class ControladorProduto extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categorias = Categoria::all();
+        $produto = Produto::find($id);
+
+        if (isset($produto)) {
+            return view('editarProduto', compact('produto', 'categorias'));
+        }
+        return redirect("/produtos");
     }
 
     /**
@@ -52,7 +68,13 @@ class ControladorProduto extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $produto = Produto::find($id);
+        $produto->name = $request->nomeProduto;
+        $produto->estoque = $request->qtdEstoque;
+        $produto->preco = $request->preco;
+        $produto->categoria_id = $request->categoria;
+        $produto->save();
+        return redirect('/produtos');
     }
 
     /**
@@ -60,6 +82,9 @@ class ControladorProduto extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (Produto::find($id)) {
+            Produto::destroy($id);
+        }
+        return redirect("/produtos");
     }
 }
