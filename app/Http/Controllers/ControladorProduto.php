@@ -15,7 +15,8 @@ class ControladorProduto extends Controller
     public function index()
     {
         $produtos = Produto::all();
-        return view("produtos", compact('produtos'));
+        $categorias = Categoria::all();
+        return view("produtos", compact('produtos', 'categorias'));
     }
 
     /**
@@ -32,8 +33,28 @@ class ControladorProduto extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "name" => "required|unique:produtos",
+            "qtdEstoque" => "required|integer",
+            "preco" => "required|numeric|min:1|max:5",
+            'categoria' => 'required|integer'
+        ]);
+
+        // $rules = [
+        //     "name" => "required|min:3|unique:produtos",
+        //     "qtdEstoque" => "required|integer",
+        //     "preco" => "required|numeric|min:1|max:5"
+        // ];
+
+        // $mensagens = [
+        //     "name.required" => 'O nome é requirido',
+        //     "name.min" => "É necessário no mínimo 3 caracteres no nome "
+        // ];
+
+        // $request->validate($rules, $mensagens);
+
         $produto = new Produto();
-        $produto->name = $request->nomeProduto;
+        $produto->name = $request->name;
         $produto->estoque = $request->qtdEstoque;
         $produto->preco = $request->preco;
         $produto->categoria_id = $request->categoria;

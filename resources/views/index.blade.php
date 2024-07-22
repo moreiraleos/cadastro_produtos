@@ -21,7 +21,7 @@
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 Nam maxime minima nihil sit doloremque veniam praesentium necessitatibus veritatis.
                             </p>
-                            <a href="/categorias" class="btn btn-primary">Cadastre seus produtos</a>
+                            <a href="/categorias" class="btn btn-primary">Cadastre suas categorias</a>
                         </div>
                     </div>
                 </div>
