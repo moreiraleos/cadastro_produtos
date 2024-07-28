@@ -15,7 +15,7 @@ Route::get("/categorias/editar/{id}", [App\Http\Controllers\ControladorCategoria
 Route::post("/categorias/{id}", [App\Http\Controllers\ControladorCategoria::class, 'update']);
 
 // Produtos
-Route::get("/produtos", [App\Http\Controllers\ControladorProduto::class, 'index']);
+Route::get("/produtos", [App\Http\Controllers\ControladorProduto::class, 'indexView']);
 Route::get("/produtos/novo", [App\Http\Controllers\ControladorProduto::class, 'create']);
 Route::post('/produtos', [App\Http\Controllers\ControladorProduto::class, 'store']);
 

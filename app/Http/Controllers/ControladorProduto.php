@@ -9,14 +9,17 @@ use Illuminate\Http\Request;
 
 class ControladorProduto extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function indexView()
     {
         $produtos = Produto::all();
         $categorias = Categoria::all();
+
         return view("produtos", compact('produtos', 'categorias'));
+    }
+    public function index()
+    {
+        $produtos = Produto::all();
+        return $produtos->toJson();
     }
 
     /**

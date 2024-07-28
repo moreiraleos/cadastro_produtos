@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -45,5 +46,11 @@ class ProdutoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function indexJason()
+    {
+        $categorias = Categoria::all();
+        return json_encode($categorias);
     }
 }
