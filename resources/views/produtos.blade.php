@@ -113,6 +113,34 @@
 
 @section('javascript')
     <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+
+        function criarProduto() {
+            prod = {
+                name: $('#name').val(),
+                preco: $('#qtdEstoque').val(),
+                estoque: $('#preco').val(),
+                categoria_id: $('#categoria').val()
+            }
+
+            $.post("/api/produtos", prod, function(data, response) {
+                if (response == 'success') {
+                    alert("Produto gravado com sucesso!");
+                }
+            });
+        }
+
+        $('#formProduto').submit(function(event) {
+            event.preventDefault();
+            console.log('teste');
+            criarProduto();
+            $('#dlgProdutos').modal('hide');
+        });
+
         function novoProduto() {
             $('#id').val('');
             $('#name').val('');

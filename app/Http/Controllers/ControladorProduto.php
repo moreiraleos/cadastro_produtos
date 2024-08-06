@@ -36,12 +36,12 @@ class ControladorProduto extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "name" => "required|unique:produtos",
-            "qtdEstoque" => "required|integer",
-            "preco" => "required|numeric|min:1|max:5",
-            'categoria' => 'required|integer'
-        ]);
+        // $request->validate([
+        //     "name" => "required|unique:produtos",
+        //     "qtdEstoque" => "required|integer",
+        //     "preco" => "required|numeric|min:1|max:5",
+        //     'categoria' => 'required|integer'
+        // ]);
 
         // $rules = [
         //     "name" => "required|min:3|unique:produtos",
@@ -56,13 +56,23 @@ class ControladorProduto extends Controller
 
         // $request->validate($rules, $mensagens);
 
-        $produto = new Produto();
-        $produto->name = $request->name;
-        $produto->estoque = $request->qtdEstoque;
-        $produto->preco = $request->preco;
-        $produto->categoria_id = $request->categoria;
-        $produto->save();
-        return redirect('/produtos');
+        // $produto = new Produto();
+        // $produto->name = $request->name;
+        // $produto->estoque = $request->qtdEstoque;
+        // $produto->preco = $request->preco;
+        // $produto->categoria_id = $request->categoria;
+        // $produto->save();
+        // return redirect('/produtos');
+
+        $prod = new Produto();
+        $prod->name = $request->input('name');
+        $prod->estoque = $request->input('estoque');
+        $prod->preco = $request->input('preco');
+        $prod->categoria_id = $request->input('categoria_id');
+
+        $prod->save();
+        return json_encode($prod);
+
     }
 
     /**
