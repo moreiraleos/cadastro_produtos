@@ -80,7 +80,10 @@ class ControladorProduto extends Controller
      */
     public function show(string $id)
     {
-        //
+        if ($prod = Produto::find($id)) {
+            return json_encode($prod);
+        }
+        return json_encode(["message" => "Não encontrado", "status" => "404"]);
     }
 
     /**
@@ -103,12 +106,28 @@ class ControladorProduto extends Controller
     public function update(Request $request, string $id)
     {
         $produto = Produto::find($id);
-        $produto->name = $request->nomeProduto;
-        $produto->estoque = $request->qtdEstoque;
-        $produto->preco = $request->preco;
-        $produto->categoria_id = $request->categoria;
-        $produto->save();
-        return redirect('/produtos');
+        if (isset($produto)) {
+            $produto->name = $request->name;
+            $produto->estoque = $request->estoque;
+            $produto->preco = $request->preco;
+            $produto->categoria_id = $request->categoria_id;
+            $produto->save();
+            return json_encode([
+                "response" => $produto,
+                "message" => "success",
+                "status" => "200"
+            ]);
+        }
+        return json_encode([
+            "message" => "Produto não encontrado",
+            "status" => "404"
+        ]);
+        // $produto->name = $request->nomeProduto;
+        // $produto->estoque = $request->qtdEstoque;
+        // $produto->preco = $request->preco;
+        // $produto->categoria_id = $request->categoria;
+        // $produto->save();
+        // return redirect('/produtos');
     }
 
     /**
@@ -118,7 +137,15 @@ class ControladorProduto extends Controller
     {
         if (Produto::find($id)) {
             Produto::destroy($id);
+            return json_encode([
+                "msg" => "success",
+                "response" => "200"
+            ]);
         }
-        return redirect("/produtos");
+        return json_encode([
+            "msg" => "error",
+            "response" => "404"
+        ]);
+        // return redirect("/produtos");
     }
 }
